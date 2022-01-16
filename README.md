@@ -15,14 +15,16 @@ import Post from 'fireCMS/post';
 
 ...
 
-<FireCMSCore
-  ...
-  services={{
-    post: Post,
-  }}
->
-  {props.children}
-</FireCMSCore>
+// FireCMS 초기화
+Core.initialize(firebaseConfig);
+Core.initializeService(FirePost);
+
+const storeConfig = {
+  reducer: {
+    post: FirePost.reducer,
+  },
+  devTools: true,
+};
 
 ...
 ```
