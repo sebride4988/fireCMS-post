@@ -7,8 +7,8 @@ import {
 import { REDUX_NAME } from '../CONSTANTS';
 import { Post } from '../types/Post';
 
-import { addOne } from './asyncThunks/addOne';
-import { setAll } from './asyncThunks/setAll';
+import { createOne } from './asyncThunks/createOne';
+import { readMany } from './asyncThunks/readMany';
 
 const postsAdapter = createEntityAdapter<Post>({
   // Assume IDs are stored in a field other than `book.id`
@@ -25,11 +25,11 @@ const postsAdapter = createEntityAdapter<Post>({
 
 export const initialState = postsAdapter.getInitialState({
   networkStatus: {
-    addOne: {
+    createOne: {
       loading: false,
       error: null as SerializedError | null,
     },
-    setAll: {
+    readMany: {
       loading: false,
       error: null as SerializedError | null,
     },
@@ -48,30 +48,30 @@ export const postSlice = createSlice({
     /**
      * ========== 글 등록 =============
      */
-    builder.addCase(addOne.pending, (state, action) => {
-      state.networkStatus.addOne.loading = true;
-      state.networkStatus.addOne.error = null;
+    builder.addCase(createOne.pending, (state, action) => {
+      state.networkStatus.createOne.loading = true;
+      state.networkStatus.createOne.error = null;
     });
-    builder.addCase(addOne.fulfilled, (state, action) => {
-      state.networkStatus.addOne.loading = false;
+    builder.addCase(createOne.fulfilled, (state, action) => {
+      state.networkStatus.createOne.loading = false;
     });
-    builder.addCase(addOne.rejected, (state, action) => {
-      state.networkStatus.addOne.loading = false;
-      state.networkStatus.addOne.error = action.error;
+    builder.addCase(createOne.rejected, (state, action) => {
+      state.networkStatus.createOne.loading = false;
+      state.networkStatus.createOne.error = action.error;
     });
     /**
      * ========== 글 불러오기 =============
      */
-    builder.addCase(setAll.pending, (state, action) => {
-      state.networkStatus.setAll.loading = true;
-      state.networkStatus.setAll.error = null;
+    builder.addCase(readMany.pending, (state, action) => {
+      state.networkStatus.readMany.loading = true;
+      state.networkStatus.readMany.error = null;
     });
-    builder.addCase(setAll.fulfilled, (state, action) => {
-      state.networkStatus.setAll.loading = false;
+    builder.addCase(readMany.fulfilled, (state, action) => {
+      state.networkStatus.readMany.loading = false;
     });
-    builder.addCase(setAll.rejected, (state, action) => {
-      state.networkStatus.setAll.loading = false;
-      state.networkStatus.setAll.error = action.error;
+    builder.addCase(readMany.rejected, (state, action) => {
+      state.networkStatus.readMany.loading = false;
+      state.networkStatus.readMany.error = action.error;
     });
   },
 });
